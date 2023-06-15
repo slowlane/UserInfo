@@ -74,7 +74,29 @@ async function getUser(id){
 
 
 
+
+
+
+//modal funktioner
 async function showModal(person) {
+  createModal(person);
+
+  window.addEventListener("click", outsideClick);
+}
+
+function hideModal() {
+  var modal = document.getElementById("myModal");
+  var modalContent = modal.querySelector('div');
+
+  modalContent.innerHTML = '';
+  modal.style.display = "none";
+
+
+  window.removeEventListener("click", outsideClick);
+}
+
+
+function createModal(person){
   var modal = document.getElementById("myModal");
   var modalContent = modal.querySelector('div');
 
@@ -96,7 +118,15 @@ async function showModal(person) {
   modal.style.display = "block";
 }
 
-function hideModal() {
+
+
+
+
+function outsideClick(event) {
   var modal = document.getElementById("myModal");
-  modal.style.display = "none";
+  var modalContent = modal.querySelector('div');
+  if (!modalContent.contains(event.target)) {
+    console.log("hi");
+    hideModal();
+  }
 }
