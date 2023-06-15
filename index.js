@@ -18,15 +18,6 @@ fetch('https://reqres.in/api/users/')
   .catch(error => console.error('Det har uppstått ett problem vid hämtning av data: ', error));
 
 
-//Skapa eventlistener för att lyssna på klicks på personer och hämta användaren
-userList.addEventListener('click', async (e) => {
-    const name = e.target.querySelector('p').textContent;
-    const user = users.filter((person) => person.first_name === name);
-    const userId = user[0].id;
-    const person = await getUser(userId);
-    showModal(person);
-})
-
 
 // Lägger till personer till arrayen och tillkallar renderUsers för att rita på skärmen
 function initializePage(data){
@@ -39,9 +30,19 @@ function initializePage(data){
 
 }
 
+//Skapa eventlistener för att lyssna på klicks på personer och hämta användaren
+userList.addEventListener('click', async (e) => {
+  const name = e.target.querySelector('p').textContent;
+  const user = users.filter((person) => person.first_name === name);
+  const userId = user[0].id;
+  const person = await getUser(userId);
+  showModal(person);
+})
+
 //Logik för uppritning av personer
 function renderUsers(){
   users.map((user) => {
+    
     let img = document.createElement('img');
     let paragraph = document.createElement('p');
     let li = document.createElement('li');
@@ -52,8 +53,6 @@ function renderUsers(){
 
     paragraph.innerText = user.first_name;
     li.appendChild(paragraph);
-    
-    // console.log(user);
 
 
     userList.appendChild(li);
@@ -61,8 +60,8 @@ function renderUsers(){
   })
 }
 
+//Hämta användare från API:et
 async function getUser(id){
-
   const userData = await fetch(`https://reqres.in/api/users/${id}`);
   const user = await userData.json();
   console.log(user);
@@ -73,7 +72,7 @@ async function getUser(id){
 
 
 
-//modal funktioner
+//Modal-funktioner
 function showModal(person) {
   createModal(person);
 
@@ -91,11 +90,10 @@ function hideModal() {
   window.removeEventListener("click", outsideClick);
 }
 
-
+//Skapa modal-innehållet
 function createModal(person){
   var modal = document.getElementById("myModal");
   var modalContent = modal.querySelector('div');
-
 
   let avatar = document.createElement('img');
   avatar.src = person.data.avatar;
@@ -106,18 +104,13 @@ function createModal(person){
   let email = document.createElement('p');
   email.textContent = person.data.email;
 
-
-
   modalContent.appendChild(avatar);
   modalContent.appendChild(email);
   modalContent.appendChild(name);
   modal.style.display = "block";
 }
 
-
-
-
-
+//Om man klickar utanför modalen så stängs den
 function outsideClick(event) {
   var modal = document.getElementById("myModal");
   var modalContent = modal.querySelector('div');
