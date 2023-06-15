@@ -17,18 +17,16 @@ fetch('https://reqres.in/api/users/')
   })
   .catch(error => console.error('Det har uppstått ett problem vid hämtning av data: ', error));
 
-
-
 // Lägger till personer till arrayen och tillkallar renderUsers för att rita på skärmen
 function initializePage(data){
     for(i = 0; i < data.data.length; i++){
       users.push(data.data[i]);
     }
-
     renderUsers();
-
-
 }
+
+
+
 
 //Skapa eventlistener för att lyssna på klicks på personer och hämta användaren
 userList.addEventListener('click', async (e) => {
@@ -59,6 +57,8 @@ function renderUsers(){
 
   })
 }
+
+
 
 //Hämta användare från API:et
 async function getUser(id){
