@@ -30,6 +30,7 @@ ul {
   margin-top: 5%;
 }
 
-/* img {
+img {
   display:inline-block;
-} */
+  pointer-events: none;
+} 
