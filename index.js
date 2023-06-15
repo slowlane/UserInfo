@@ -19,11 +19,14 @@ fetch('https://reqres.in/api/users/')
 
 
 //Skapa eventlistener för att lyssna på klicks på personer och hämta användaren
-userList.addEventListener('click', (e) => {
+userList.addEventListener('click', async (e) => {
     const name = e.target.querySelector('p').textContent;
     const user = users.filter((person) => person.first_name === name);
     const userId = user[0].id;
-    getUser(userId);
+    const person = await getUser(userId);
+    console.log(person);
+    showModal(person);
+    console.log(userId);
 })
 
 
@@ -64,16 +67,36 @@ async function getUser(id){
 
   const userData = await fetch(`https://reqres.in/api/users/${id}`);
   const user = await userData.json();
-  console.log(user.data);
-  // const fetch('https://reqres.in/api/users/')
-  // .then(res => {
-  //   if (!res.ok) {
-  //     throw new Error('Nätverksrespons inte ok');
-  //   }
-  //   return res.json();
-  // })
-  // .then(data => {
-  //   initializePage(data);
-  // })
-  // .catch(error => console.error('Det har uppstått ett problem vid hämtning av data: ', error));
+  console.log(user);
+  return user;
+  
+}
+
+
+
+async function showModal(person) {
+  var modal = document.getElementById("myModal");
+  var modalContent = modal.querySelector('div');
+
+
+  let avatar = document.createElement('img');
+  avatar.src = person.data.avatar;
+
+  let name = document.createElement('p');
+  name.textContent = `${person.data.first_name} ${person.data.last_name}`;
+
+  let email = document.createElement('p');
+  email.textContent = person.data.email;
+
+
+
+  modalContent.appendChild(avatar);
+  modalContent.appendChild(email);
+  modalContent.appendChild(name);
+  modal.style.display = "block";
+}
+
+function hideModal() {
+  var modal = document.getElementById("myModal");
+  modal.style.display = "none";
 }
