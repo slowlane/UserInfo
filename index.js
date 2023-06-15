@@ -89,6 +89,15 @@ function hideModal() {
   window.removeEventListener("click", outsideClick);
 }
 
+//Om man klickar utanför modalen så stängs den
+function outsideClick(event) {
+  var modal = document.getElementById("myModal");
+  var modalContent = modal.querySelector('div');
+  if (!modalContent.contains(event.target)) {
+    hideModal();
+  }
+}
+
 //Skapa modal-innehållet
 function createModal(person){
   var modal = document.getElementById("myModal");
@@ -107,13 +116,4 @@ function createModal(person){
   modalContent.appendChild(email);
   modalContent.appendChild(name);
   modal.style.display = "block";
-}
-
-//Om man klickar utanför modalen så stängs den
-function outsideClick(event) {
-  var modal = document.getElementById("myModal");
-  var modalContent = modal.querySelector('div');
-  if (!modalContent.contains(event.target)) {
-    hideModal();
-  }
 }
