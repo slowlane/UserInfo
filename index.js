@@ -4,7 +4,7 @@ const userList = document.getElementById('user-list');
 
 const users = [];
 
-
+//Hämta användarna
 fetch('https://reqres.in/api/users/')
   .then(res => {
     if (!res.ok) {
@@ -18,12 +18,26 @@ fetch('https://reqres.in/api/users/')
   .catch(error => console.error('Det har uppstått ett problem vid hämtning av data: ', error));
 
 
-  userList.addEventListener('click', (e) => {
-    console.log(e.target);
-  })
+//Skapa eventlistener för att lyssna på klicks på personer
+userList.addEventListener('click', (e) => {
+    const name = e.target.querySelector('p').textContent;
+    const user = users.filter((person) => person.first_name === name);
+    console.log(user);
+})
 
 
+// Lägger till personer till arrayen och tillkallar renderUsers för att rita på skärmen
+function initializePage(data){
+    for(i = 0; i < data.data.length; i++){
+      users.push(data.data[i]);
+    }
 
+    renderUsers();
+
+
+}
+
+//Logik för uppritning av personer
 function renderUsers(){
   users.map((user) => {
     let img = document.createElement('img');
@@ -46,12 +60,3 @@ function renderUsers(){
 }
 
 
-  function initializePage(data){
-    for(i = 0; i < data.data.length; i++){
-      users.push(data.data[i]);
-    }
-
-    renderUsers();
-
-
-  }
