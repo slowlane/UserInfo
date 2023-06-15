@@ -18,11 +18,12 @@ fetch('https://reqres.in/api/users/')
   .catch(error => console.error('Det har uppstått ett problem vid hämtning av data: ', error));
 
 
-//Skapa eventlistener för att lyssna på klicks på personer
+//Skapa eventlistener för att lyssna på klicks på personer och hämta användaren
 userList.addEventListener('click', (e) => {
     const name = e.target.querySelector('p').textContent;
     const user = users.filter((person) => person.first_name === name);
-    console.log(user);
+    const userId = user[0].id;
+    getUser(userId);
 })
 
 
@@ -51,7 +52,7 @@ function renderUsers(){
     paragraph.innerText = user.first_name;
     li.appendChild(paragraph);
     
-    console.log(user);
+    // console.log(user);
 
 
     userList.appendChild(li);
@@ -59,4 +60,20 @@ function renderUsers(){
   })
 }
 
+async function getUser(id){
 
+  const userData = await fetch(`https://reqres.in/api/users/${id}`);
+  const user = await userData.json();
+  console.log(user.data);
+  // const fetch('https://reqres.in/api/users/')
+  // .then(res => {
+  //   if (!res.ok) {
+  //     throw new Error('Nätverksrespons inte ok');
+  //   }
+  //   return res.json();
+  // })
+  // .then(data => {
+  //   initializePage(data);
+  // })
+  // .catch(error => console.error('Det har uppstått ett problem vid hämtning av data: ', error));
+}
