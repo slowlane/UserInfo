@@ -64,7 +64,6 @@ function renderUsers(){
 async function getUser(id){
   const userData = await fetch(`https://reqres.in/api/users/${id}`);
   const user = await userData.json();
-  console.log(user);
   return user;
   
 }
@@ -115,7 +114,6 @@ function outsideClick(event) {
   var modal = document.getElementById("myModal");
   var modalContent = modal.querySelector('div');
   if (!modalContent.contains(event.target)) {
-    console.log("hi");
     hideModal();
   }
 }
