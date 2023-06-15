@@ -24,9 +24,7 @@ userList.addEventListener('click', async (e) => {
     const user = users.filter((person) => person.first_name === name);
     const userId = user[0].id;
     const person = await getUser(userId);
-    console.log(person);
     showModal(person);
-    console.log(userId);
 })
 
 
@@ -75,10 +73,8 @@ async function getUser(id){
 
 
 
-
-
 //modal funktioner
-async function showModal(person) {
+function showModal(person) {
   createModal(person);
 
   window.addEventListener("click", outsideClick);
