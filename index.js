@@ -16,11 +16,15 @@ fetch('https://reqres.in/api/users/')
     }
 
     users.map((user) => {
-      console.log(user);
+      let img = document.createElement('img');
       let li = document.createElement('li');
+      img.src=`${user.avatar}`;
+      console.log(user);
       li.classList.add('person');
-      li.textContent = user.id;
-      userList.appendChild(li)
+      li.textContent = user.first_name;
+      li.appendChild(img);
+      userList.appendChild(li);
+
     })
   })
   .catch(error => console.error('Det har uppstått ett probled vid hämtning av data: ', error));
