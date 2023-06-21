@@ -1,8 +1,13 @@
 //Hämta användare från API:et
 export async function getUser(id){
-  const userData = await fetch(`https://reqres.in/api/users/${id}`);
-  const user = await userData.json();
-  return user;
+  try{
+    const userData = await fetch(`https://reqres.in/api/users/${id}`);
+    const user = await userData.json();
+    return user;
+  }catch(e){
+    console.log(e);
+  }
+
   
 }
 
