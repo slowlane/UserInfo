@@ -1,119 +1,15 @@
-const userDiv = document.getElementById('users');
-const userList = document.getElementById('user-list');
+import { renderUsers } from './modules/users/renderUsers.js';
+import { getUsers } from './modules/users/users.js';
 
+//Hämta användare och initialisera sidan
+let userArray = [];
+getUsers().then((users) => {
+   userArray = users;
+}).then(() => {
+  initializePage(userArray);
+});
 
-const users = [];
-
-//Hämta användarna
-fetch('https://reqres.in/api/users/')
-  .then(res => {
-    if (!res.ok) {
-      throw new Error('Nätverksrespons inte ok');
-    }
-    return res.json();
-  })
-  .then(data => {
-    initializePage(data);
-  })
-  .catch(error => console.error('Det har uppstått ett problem vid hämtning av data: ', error));
-
-// Lägger till personer till arrayen och tillkallar renderUsers för att rita på skärmen
-function initializePage(data){
-    for(i = 0; i < data.data.length; i++){
-      users.push(data.data[i]);
-    }
-    renderUsers();
+async function initializePage(users){
+  renderUsers(users);
 }
 
-
-
-
-//Skapa eventlistener för att lyssna på klicks på personer och hämta användaren
-userList.addEventListener('click', async (e) => {
-  const name = e.target.querySelector('p').textContent;
-  const user = users.filter((person) => person.first_name === name);
-  const userId = user[0].id;
-  const person = await getUser(userId);
-  showModal(person);
-})
-
-//Logik för uppritning av personer
-function renderUsers(){
-  users.map((user) => {
-    
-    let img = document.createElement('img');
-    let paragraph = document.createElement('p');
-    let li = document.createElement('li');
-    
-    img.src=`${user.avatar}`;
-    li.appendChild(img);
-    li.classList.add('person');
-
-    paragraph.innerText = user.first_name;
-    li.appendChild(paragraph);
-
-
-    userList.appendChild(li);
-
-  })
-}
-
-
-
-//Hämta användare från API:et
-async function getUser(id){
-  const userData = await fetch(`https://reqres.in/api/users/${id}`);
-  const user = await userData.json();
-  return user;
-  
-}
-
-
-
-
-//Modal-funktioner
-function showModal(person) {
-  createModal(person);
-
-  window.addEventListener("click", outsideClick);
-}
-
-function hideModal() {
-  var modal = document.getElementById("myModal");
-  var modalContent = modal.querySelector('div');
-
-  modalContent.innerHTML = '';
-  modal.style.display = "none";
-
-
-  window.removeEventListener("click", outsideClick);
-}
-
-//Om man klickar utanför modalen så stängs den
-function outsideClick(event) {
-  var modal = document.getElementById("myModal");
-  var modalContent = modal.querySelector('div');
-  if (!modalContent.contains(event.target)) {
-    hideModal();
-  }
-}
-
-//Skapa modal-innehållet
-function createModal(person){
-  var modal = document.getElementById("myModal");
-  var modalContent = modal.querySelector('div');
-
-  let avatar = document.createElement('img');
-  avatar.src = person.data.avatar;
-
-  let name = document.createElement('p');
-  name.textContent = `${person.data.first_name} ${person.data.last_name}`;
-
-  let email = document.createElement('p');
-  email.textContent = person.data.email;
-
-  modalContent.appendChild(avatar);
-  modalContent.appendChild(email);
-  modalContent.appendChild(name);
-  modal.style.display = "block";
-}
