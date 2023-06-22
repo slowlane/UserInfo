@@ -7,8 +7,6 @@ export async function getUser(id){
   }catch(e){
     console.log(e);
   }
-
-  
 }
 
 //Hämta alla användare från API:et

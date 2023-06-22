@@ -1,5 +1,5 @@
 //Skapa innehållet för modalen (personer)
-export function createModalPersonCard(person){
+export function renderModalPersonCard(person){
   const modal = document.getElementById("myModal");
 
   const modalContent = document.createElement('div');
@@ -17,6 +17,7 @@ export function createModalPersonCard(person){
   modalContent.appendChild(avatar);
   modalContent.appendChild(email);
   modalContent.appendChild(name);
+  modalContent.classList.add('show');
   modal.appendChild(modalContent);
 
 

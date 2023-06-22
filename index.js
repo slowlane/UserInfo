@@ -9,7 +9,7 @@ getUsers().then((users) => {
   initializePage(userArray);
 });
 
-async function initializePage(users){
+function initializePage(users){
   renderUsers(users);
 }
 

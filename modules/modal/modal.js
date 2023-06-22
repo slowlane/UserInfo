@@ -1,4 +1,4 @@
-import { createModalPersonCard } from "./modalPersonCard.js";
+import { renderModalPersonCard } from "./renderPersonModalCard.js";
 
 //Skapa modalen
 export function showModal(data) {
@@ -23,5 +23,5 @@ function outsideClick(event) {
 
 //Skapa modal-innehållet
 function createModal(data){
-  createModalPersonCard(data);
+  renderModalPersonCard(data);
 }

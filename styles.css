@@ -78,5 +78,19 @@ img {
   width: 30%;
   border-radius: 8px;
   color: black;
-  /* text-align: center;  */
+  animation-name: animatetop;
+  animation-duration: 0.6s;
+  transform: scale(0.7);
+  opacity: 0;
+  transition: transform 0.5s, opacity 0.5s;
+}
+
+@keyframes animatetop {
+  from {top: -300px; opacity: 0}
+  to {top: 0; opacity: 1}
+}
+
+.modal-content.show {
+  transform: scale(1);
+  opacity: 1;
 }
