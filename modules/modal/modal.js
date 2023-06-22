@@ -2,7 +2,7 @@ import { renderModalPersonCard } from "./renderPersonModalCard.js";
 
 //Skapa modalen
 export function showModal(data) {
-  createModal(data);
+  createModalContent(data);
   window.addEventListener("click", outsideClick);
 }
 
@@ -22,6 +22,6 @@ function outsideClick(event) {
 }
 
 //Skapa modal-innehållet
-function createModal(data){
+function createModalContent(data){
   renderModalPersonCard(data);
 }
